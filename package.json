@@ -1,0 +1,28 @@
+{
+  "name": "website-to-markdown-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for fetching websites and converting to markdown",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@readme/openapi-parser": "^4.1.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0",
+    "swagger-parser": "^10.0.3",
+    "turndown": "^7.1.2",
+    "yaml": "^2.8.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/turndown": "^5.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

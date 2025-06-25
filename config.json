@@ -1,0 +1,54 @@
+{
+  "websites": [
+    {
+      "name": "tailwind_css",
+      "url": "https://tailwindcss.com",
+      "description": "Tailwind CSS Official Website"
+    },
+    {
+      "name": "nextjs",
+      "url": "https://nextjs.org",
+      "description": "Next.js Official Documentation"
+    },
+    {
+      "name": "react",
+      "url": "https://react.dev",
+      "description": "React Official Documentation"
+    },
+    {
+      "name": "mdn_web_docs",
+      "url": "https://developer.mozilla.org",
+      "description": "MDN Web Development Documentation"
+    },
+    {
+      "name": "cursor_docs",
+      "url": "https://docs.cursor.com",
+      "description": "Cursor Official Documentation"
+    },
+    {
+      "name": "petstore_openapi",
+      "url": "https://petstore3.swagger.io/api/v3/openapi.json",
+      "description": "Swagger Petstore OpenAPI 3.0 Specification (Demo)"
+    },
+    {
+      "name": "petstore_swagger",
+      "url": "https://petstore.swagger.io/v2/swagger.json",
+      "description": "Swagger Petstore Swagger 2.0 Specification (Demo)"
+    },
+    {
+      "name": "github_api",
+      "url": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+      "description": "GitHub REST API OpenAPI Specification"
+    },
+    {
+      "name": "openapi_spec",
+      "url": "https://spec.openapis.org/oas/v3.1.0",
+      "description": "OpenAPI 3.1.0 Official Specification Documentation"
+    },
+    {
+      "name": "swagger_ui_demo",
+      "url": "https://petstore.swagger.io/v2/swagger.yaml",
+      "description": "Swagger UI Demo - Swagger 2.0 YAML Format"
+    }
+  ]
+} 
