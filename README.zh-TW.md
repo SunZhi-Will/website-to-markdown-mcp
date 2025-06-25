@@ -24,9 +24,9 @@
 
 ## 🚀 快速開始
 
-### 🎯 一鍵配置（推薦方式）
+### 🎯 方法 1：NPX 安裝（🌟 推薦）
 
-> 💡 **最佳實踐**：使用外部配置檔案，讓管理更簡單！
+> 💡 **最簡單的方式**：無需本地安裝！
 
 #### **步驟 1**：建立配置檔案 📄
 
@@ -57,8 +57,8 @@
 {
   "mcpServers": {
     "website-to-markdown": {
-      "command": "cmd",
-      "args": ["/c", "node", "./website-to-markdown-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "website-to-markdown-mcp"],
       "disabled": false,
       "env": {
         "WEBSITES_CONFIG_PATH": "./my-websites.json"
@@ -76,9 +76,43 @@
 
 <div align="center">
 
-**🎉 完成！現在您可以開始使用了！**
+**🎉 完成！無需安裝！**
 
 </div>
+
+---
+
+### 🎯 方法 2：本地安裝
+
+> 💡 **最佳實踐**：適用於開發或客製化需求！
+
+#### **步驟 1**：複製並建置
+
+```bash
+git clone https://github.com/your-username/website-to-markdown-mcp.git
+cd website-to-markdown-mcp
+npm install
+npm run build
+```
+
+#### **步驟 2**：配置 MCP 伺服器
+
+在 `.cursor/mcp.json` 中新增：
+
+```json
+{
+  "mcpServers": {
+    "website-to-markdown": {
+      "command": "cmd",
+      "args": ["/c", "node", "./website-to-markdown-mcp/dist/index.js"],
+      "disabled": false,
+      "env": {
+        "WEBSITES_CONFIG_PATH": "./my-websites.json"
+      }
+    }
+  }
+}
+```
 
 ---
 
@@ -129,14 +163,27 @@
 
 ### 🛠️ 系統需求
 
-- **Node.js** 18+ 
-- **npm** 或 **yarn**
+- **Node.js** 20.18.1+ (推薦：v22.15.0 LTS) 
+- **npm** 10.0.0+ 或 **yarn**
 - **Cursor** 編輯器
 
-### ⚡ 快速安裝
+> ⚠️ **重要提醒**：某些依賴需要 Node.js v20.18.1 或更高版本。如果遇到引擎相容性警告，請更新您的 Node.js 版本。
+
+### ⚡ NPM 套件安裝
 
 ```bash
-# 1. 進入專案目錄
+# 全域安裝
+npm install -g website-to-markdown-mcp
+
+# 或直接使用 npx（推薦）
+npx website-to-markdown-mcp
+```
+
+### 🔧 開發環境設定
+
+```bash
+# 1. 複製儲存庫
+git clone https://github.com/your-username/website-to-markdown-mcp.git
 cd website-to-markdown-mcp
 
 # 2. 安裝相依套件
@@ -453,6 +500,8 @@ npm run dev 2> debug.log
 - ✨ **新增** 版本自動適配機制
 - ✨ **新增** 結構化 API 文件摘要
 - 🔧 **預配置** 多個 OpenAPI/Swagger 範例
+- 📦 **新增** NPM 套件發布，支援 npx 使用
+- 🎯 **增強** 安裝方式，提升使用者體驗
 
 ### 🎯 v1.0.0 (穩定版本)
 
@@ -460,6 +509,48 @@ npm run dev 2> debug.log
 - 🌐 **基礎功能** 網站內容抓取
 - 📝 **核心功能** Markdown 轉換  
 - ⚙️ **配置支援** 多網站管理
+
+---
+
+## 📦 NPM 套件發布
+
+此專案已打包為 npm 套件，可透過以下方式使用：
+
+### 🚀 使用 NPX（推薦）
+
+```bash
+# 直接執行（無需安裝）
+npx website-to-markdown-mcp
+```
+
+### 🌍 全域安裝
+
+```bash
+# 全域安裝
+npm install -g website-to-markdown-mcp
+
+# 然後直接使用
+website-to-markdown-mcp
+```
+
+### 📋 配置範例
+
+在您的 `.cursor/mcp.json` 中：
+
+```json
+{
+  "mcpServers": {
+    "website-to-markdown": {
+      "command": "npx",
+      "args": ["-y", "website-to-markdown-mcp"],
+      "disabled": false,
+      "env": {
+        "WEBSITES_CONFIG_PATH": "./my-websites.json"
+      }
+    }
+  }
+}
+```
 
 ---
 

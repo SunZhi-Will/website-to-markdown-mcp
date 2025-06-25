@@ -1,13 +1,47 @@
 {
   "name": "website-to-markdown-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for fetching websites and converting to markdown",
+  "version": "1.1.1",
+  "description": "MCP server for fetching websites and converting to markdown with full OpenAPI/Swagger support",
   "main": "dist/index.js",
+  "bin": {
+    "website-to-markdown-mcp": "dist/index.js"
+  },
   "type": "module",
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "website",
+    "markdown",
+    "openapi",
+    "swagger",
+    "api-docs",
+    "documentation"
+  ],
+  "author": "Sun",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/website-to-markdown-mcp.git"
+  },
+  "homepage": "https://github.com/your-username/website-to-markdown-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/website-to-markdown-mcp/issues"
+  },
+  "files": [
+    "dist/**/*",
+    "config.json",
+    "README.md",
+    "README.zh-TW.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",

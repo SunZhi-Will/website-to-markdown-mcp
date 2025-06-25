@@ -24,9 +24,9 @@
 
 ## 🚀 Quick Start
 
-### 🎯 One-Click Configuration (Recommended)
+### 🎯 Method 1: NPX Installation (🌟 Recommended)
 
-> 💡 **Best Practice**: Use external configuration files for easier management!
+> 💡 **Easiest way**: No local installation needed!
 
 #### **Step 1**: Create Configuration File 📄
 
@@ -57,8 +57,8 @@ Add to `.cursor/mcp.json`:
 {
   "mcpServers": {
     "website-to-markdown": {
-      "command": "cmd",
-      "args": ["/c", "node", "./website-to-markdown-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "website-to-markdown-mcp"],
       "disabled": false,
       "env": {
         "WEBSITES_CONFIG_PATH": "./my-websites.json"
@@ -76,9 +76,43 @@ Add to `.cursor/mcp.json`:
 
 <div align="center">
 
-**🎉 Done! You can now start using it!**
+**🎉 Done! No installation required!**
 
 </div>
+
+---
+
+### 🎯 Method 2: Local Installation
+
+> 💡 **Best Practice**: Use this method for development or customization!
+
+#### **Step 1**: Clone and Build
+
+```bash
+git clone https://github.com/your-username/website-to-markdown-mcp.git
+cd website-to-markdown-mcp
+npm install
+npm run build
+```
+
+#### **Step 2**: Configure MCP Server
+
+Add to `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "website-to-markdown": {
+      "command": "cmd",
+      "args": ["/c", "node", "./website-to-markdown-mcp/dist/index.js"],
+      "disabled": false,
+      "env": {
+        "WEBSITES_CONFIG_PATH": "./my-websites.json"
+      }
+    }
+  }
+}
+```
 
 ---
 
@@ -129,14 +163,27 @@ Add to `.cursor/mcp.json`:
 
 ### 🛠️ System Requirements
 
-- **Node.js** 18+ 
-- **npm** or **yarn**
+- **Node.js** 20.18.1+ (Recommended: v22.15.0 LTS) 
+- **npm** 10.0.0+ or **yarn**
 - **Cursor** Editor
 
-### ⚡ Quick Installation
+> ⚠️ **Important**: Some dependencies require Node.js v20.18.1 or higher. Please update your Node.js version if you encounter engine compatibility warnings.
+
+### ⚡ NPM Package Installation
 
 ```bash
-# 1. Navigate to project directory
+# Global installation
+npm install -g website-to-markdown-mcp
+
+# Or use directly with npx (recommended)
+npx website-to-markdown-mcp
+```
+
+### 🔧 Development Setup
+
+```bash
+# 1. Clone repository
+git clone https://github.com/your-username/website-to-markdown-mcp.git
 cd website-to-markdown-mcp
 
 # 2. Install dependencies
@@ -360,10 +407,32 @@ Please fetch React official documentation content
 
 ## 🚨 Troubleshooting
 
-### ❓ Common Issues
+> 📋 **Complete Troubleshooting Guide**: See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions to common issues.
+
+### ❓ Quick Solutions
 
 <details>
-<summary><b>🔧 Configuration Related Issues</b></summary>
+<summary><b>🔧 Node.js Version Issues</b></summary>
+
+**Error**: `npm WARN EBADENGINE Unsupported engine`
+- **Solution**: Update Node.js to v20.18.1 or higher
+- **Download**: [Node.js Official Website](https://nodejs.org/)
+- **Verify**: `node --version`
+
+</details>
+
+<details>
+<summary><b>🌐 Module Not Found Issues</b></summary>
+
+**Error**: `Cannot find module './db.json'`
+- **Solution 1**: Clear npm cache: `npm cache clean --force`
+- **Solution 2**: Update Node.js version
+- **Solution 3**: Use local installation instead of npx
+
+</details>
+
+<details>
+<summary><b>⚙️ Configuration Issues</b></summary>
 
 **Q: Configuration changes not taking effect?**
 - ✅ Confirm JSON format is correct
@@ -374,21 +443,6 @@ Please fetch React official documentation content
 - 🛠️ Use [JSON Validator](https://jsonlint.com/)
 - 🛠️ Confirm using double quotes
 - 🛠️ Check for extra commas
-
-</details>
-
-<details>
-<summary><b>🌐 Website Fetching Issues</b></summary>
-
-**Q: Cannot fetch certain websites?**
-- 🔍 Check if website is normally accessible
-- 🔍 Some websites have anti-crawling mechanisms
-- 🔍 Confirm network connection
-
-**Q: OpenAPI parsing failed?**
-- ✅ Confirm URL points to valid JSON/YAML
-- ✅ Check specification syntax correctness
-- ✅ View detailed error messages
 
 </details>
 
@@ -453,6 +507,8 @@ npm run dev 2> debug.log
 - ✨ **Added** Version auto-adaptation mechanism
 - ✨ **Added** Structured API documentation summary
 - 🔧 **Pre-configured** Multiple OpenAPI/Swagger examples
+- 📦 **Added** NPM package distribution with npx support
+- 🎯 **Enhanced** Installation methods for better user experience
 
 ### 🎯 v1.0.0 (Stable)
 

@@ -1,0 +1,36 @@
+# Source files
+src/
+tsconfig.json
+
+# Development dependencies
+node_modules/
+*.log
+.DS_Store
+
+# Development files
+install.bat
+.gitignore
+.git/
+
+# IDE files
+.vscode/
+.cursor/
+*.swp
+*.swo
+
+# Test files
+test/
+tests/
+*.test.js
+*.test.ts
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Temporary files
+*.tmp
+*.temp 
