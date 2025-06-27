@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { EnhancedWebsiteFetcher } from './enhanced-fetcher.js';
 import { validate, dereference } from '@readme/openapi-parser';
 import { parse as parseYaml } from 'yaml';
 
@@ -136,6 +137,9 @@ const getConfig = () => {
     ]
   };
 };
+
+// Enhanced website fetcher instance
+const enhancedFetcher = new EnhancedWebsiteFetcher();
 
 // Turndown configuration
 const turndownService = new TurndownService({
@@ -440,6 +444,10 @@ async function fetchWebsiteContent(url: string): Promise<{
   title: string; 
   content: string; 
   markdown: string;
+  wordCount?: number;
+  readingTime?: number;
+  summary?: string;
+  language?: string;
   isOpenAPI?: boolean;
   openAPIData?: {
     spec: OpenAPISpec;
@@ -450,21 +458,21 @@ async function fetchWebsiteContent(url: string): Promise<{
   };
 }> {
   try {
-    console.error(`Fetching website: ${url}`);
+    console.error(`正在獲取網站: ${url}`);
     
+    // 首先檢查是否是 OpenAPI 內容
     const response = await axios.get(url, {
       timeout: 30000,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8,application/json,application/yaml',
-        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1'
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
       }
     });
-
+    
     // Check if it's a direct OpenAPI/JSON/YAML file
     const contentType = response.headers['content-type'] || '';
     const rawContent = response.data;
@@ -477,7 +485,7 @@ async function fetchWebsiteContent(url: string): Promise<{
         url.endsWith('.yml') ||
         (typeof rawContent === 'string' && isOpenAPIContent(rawContent))) {
       
-      console.error(`Detected OpenAPI specification file: ${url}`);
+      console.error(`檢測到 OpenAPI 規範文件: ${url}`);
       
       const content = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent, null, 2);
       const openAPIData = await parseOpenAPISpec(content);
@@ -490,66 +498,30 @@ async function fetchWebsiteContent(url: string): Promise<{
         openAPIData
       };
     }
-
-    // Handle general webpage content
-    const $ = cheerio.load(response.data);
     
-    // Remove scripts, styles and other unnecessary elements
-    $('script, style, nav, footer, .nav, .footer, .sidebar, .ads, .advertisement').remove();
+    // 使用增強的獲取器處理一般網頁內容
+    const processedContent = await enhancedFetcher.fetchAndProcess(url, {
+      removeAds: true,
+      removeNavigation: true,
+      extractMainContent: true,
+      timeout: 30000
+    });
     
-    // Get title
-    const title = $('title').text() || $('h1').first().text() || 'Untitled';
-    
-    // Get main content
-    let content = '';
-    
-    // Try to find main content area
-    const mainSelectors = [
-      'main',
-      'article', 
-      '.content',
-      '.main-content',
-      '.post-content',
-      '.entry-content',
-      '#content',
-      '#main'
-    ];
-    
-    let $mainContent = null;
-    for (const selector of mainSelectors) {
-      $mainContent = $(selector);
-      if ($mainContent.length > 0) {
-        break;
-      }
-    }
-    
-    // If no main content area found, use body
-    if (!$mainContent || $mainContent.length === 0) {
-      $mainContent = $('body');
-    }
-    
-    content = $mainContent.html() || '';
-    
-    // Convert to markdown
-    const markdown = turndownService.turndown(content);
-    
-    // Clean markdown
-    const cleanMarkdown = markdown
-      .replace(/\n{3,}/g, '\n\n') // Remove excessive blank lines
-      .replace(/^\s+$/gm, '') // Remove lines with only whitespace
-      .trim();
-
-    console.error(`Successfully fetched website: ${title}`);
+    console.error(`成功獲取網站: ${processedContent.title} (${processedContent.wordCount} 字, ${processedContent.readingTime} 分鐘閱讀)`);
     
     return {
-      title,
-      content: $mainContent.text().slice(0, 1000), // Limit plain text content length
-      markdown: cleanMarkdown
+      title: processedContent.title,
+      content: processedContent.content.slice(0, 1000), // 限制純文本內容長度
+      markdown: processedContent.markdown,
+      wordCount: processedContent.wordCount,
+      readingTime: processedContent.readingTime,
+      summary: processedContent.summary,
+      language: processedContent.language
     };
     
   } catch (error) {
-    console.error(`Failed to fetch website ${url}:`, error);
-    throw new McpError(ErrorCode.InternalError, `Unable to fetch website ${url}: ${error instanceof Error ? error.message : String(error)}`);
+    console.error(`獲取網站 ${url} 失敗:`, error);
+    throw new McpError(ErrorCode.InternalError, `無法獲取網站 ${url}: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -702,11 +674,39 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       const result = await fetchWebsiteContent(url);
       
+      let output = `# ${result.title}\n\n**來源**: ${url}\n`;
+      
+      if (result.summary) {
+        output += `**摘要**: ${result.summary}\n`;
+      }
+      
+      if (result.readingTime) {
+        output += `**預估閱讀時間**: ${result.readingTime} 分鐘\n`;
+      }
+      
+      if (result.wordCount) {
+        output += `**字數統計**: ${result.wordCount}\n`;
+      }
+      
+      if (result.language) {
+        output += `**語言**: ${result.language === 'zh' ? '中文' : '英文'}\n`;
+      }
+      
+      if (result.isOpenAPI) {
+        output += `**類型**: OpenAPI/Swagger 規範\n`;
+        if (result.openAPIData?.isValid === false) {
+          output += `**驗證警告**: 規範可能有問題\n`;
+        }
+      }
+      
+      output += '\n---\n\n';
+      output += result.markdown;
+
       return {
         content: [
           {
             type: 'text',
-            text: `# ${result.title}\n\n**Source**: ${url}\n\n---\n\n${result.markdown}`
+            text: output
           }
         ]
       };
@@ -735,11 +735,43 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     if (websiteMatch) {
       const result = await fetchWebsiteContent(websiteMatch.url);
       
+      let output = `# ${result.title}\n\n**來源**: ${websiteMatch.url}\n**網站**: ${websiteMatch.name}\n`;
+      
+      if (websiteMatch.description) {
+        output += `**描述**: ${websiteMatch.description}\n`;
+      }
+      
+      if (result.summary) {
+        output += `**摘要**: ${result.summary}\n`;
+      }
+      
+      if (result.readingTime) {
+        output += `**預估閱讀時間**: ${result.readingTime} 分鐘\n`;
+      }
+      
+      if (result.wordCount) {
+        output += `**字數統計**: ${result.wordCount}\n`;
+      }
+      
+      if (result.language) {
+        output += `**語言**: ${result.language === 'zh' ? '中文' : '英文'}\n`;
+      }
+      
+      if (result.isOpenAPI) {
+        output += `**類型**: OpenAPI/Swagger 規範\n`;
+        if (result.openAPIData?.isValid === false) {
+          output += `**驗證警告**: 規範可能有問題\n`;
+        }
+      }
+      
+      output += '\n---\n\n';
+      output += result.markdown;
+
       return {
         content: [
           {
             type: 'text',
-            text: `# ${result.title}\n\n**Source**: ${websiteMatch.url}\n**Website**: ${websiteMatch.name}\n\n---\n\n${result.markdown}`
+            text: output
           }
         ]
       };

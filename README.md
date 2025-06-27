@@ -12,13 +12,34 @@
 
 <div align="center">
 
-| 🌟 Core Functions | 📊 OpenAPI Support | ⚙️ Flexible Configuration | 🎯 Smart Extraction |
+| 🌟 Enhanced Processing | 📊 OpenAPI Support | ⚙️ Smart Analysis | 🎯 Advanced Extraction |
 |:--------:|:-------------:|:----------:|:----------:|
-| Website to Markdown | OpenAPI 3.x/Swagger 2.0 | Multiple config methods | Smart content detection |
-| Auto cleanup elements | Professional validation | Environment variables | Main content area detection |
-| Batch configuration | Structured API parsing | Real-time config updates | Multi-format support |
+| AI-powered content cleanup | OpenAPI 3.x/Swagger 2.0 | Reading time calculation | Main content detection |
+| Auto ad removal | Professional validation | Word count statistics | Language detection |
+| Content summarization | Structured API parsing | Smart retry mechanism | Multi-format support |
 
 </div>
+
+---
+
+## 🆕 What's New in v1.2.0
+
+<div align="center">
+
+### 🚀 Major Enhancements
+
+</div>
+
+| Feature | Status | Description |
+|:-----|:----------:|:-----|
+| 🧠 **Enhanced Content Processor** | ✅ | AI-powered content cleaning and extraction |
+| 📊 **Smart Analytics** | ✅ | Word count, reading time, content summary |
+| 🌍 **Language Detection** | ✅ | Automatic language identification |
+| 🎯 **Intelligent Retry** | ✅ | Smart retry mechanism with exponential backoff |
+| 🔍 **Stealth Browser** | ✅ | Anti-detection browsing capabilities |
+| ⚡ **Rate Limiting** | ✅ | Built-in rate limiting and concurrency control |
+| 🧹 **Content Cleanup** | ✅ | Remove ads, navigation, and irrelevant content |
+| 📝 **Enhanced Markdown** | ✅ | Support for strikethrough, underline, highlights |
 
 ---
 
@@ -116,11 +137,42 @@ Add to `.cursor/mcp.json`:
 
 ---
 
+## 🔥 Enhanced Output Features
+
+### 📊 Rich Content Analysis
+
+Every fetched content now includes:
+
+- **📝 Content Summary**: AI-generated summary of the main content
+- **⏱️ Reading Time**: Estimated reading time based on content length
+- **🔢 Word Count**: Accurate word count for both English and Chinese
+- **🌍 Language Detection**: Automatic language identification
+- **🎯 Content Quality Score**: Assessment of content relevance
+
+### 📋 Enhanced Markdown Output
+
+```markdown
+# 🚀 Example Website
+
+**Source**: https://example.com
+**Website**: example_site - Example Website
+**📊 Reading Time**: 5 minutes
+**🔢 Word Count**: 1,250 words
+**🌍 Language**: English
+**📝 Summary**: This article discusses the latest developments in web technology...
+
+---
+
+[Enhanced Markdown content with better formatting...]
+```
+
+---
+
 ## 🆕 Complete OpenAPI/Swagger Support
 
 <div align="center">
 
-### 🔥 New Feature Highlights
+### 🔥 Professional API Documentation
 
 </div>
 
@@ -320,19 +372,23 @@ Each configured website automatically generates corresponding dedicated tools:
 
 ---
 
-## 📊 Output Format Examples
+## 📊 Enhanced Output Format Examples
 
-### 🌐 General Website Content
+### 🌐 General Website Content with Analytics
 
 ```markdown
 # Website Title
 
 **Source**: https://example.com
 **Website**: example_site - Example Website
+**📊 Reading Time**: 3 minutes
+**🔢 Word Count**: 650 words
+**🌍 Language**: English
+**📝 Summary**: This article provides a comprehensive overview of modern web development practices, covering frontend frameworks, backend technologies, and deployment strategies.
 
 ---
 
-[Converted Markdown content...]
+[Enhanced cleaned Markdown content with ads removed and main content extracted...]
 ```
 
 ### 📋 OpenAPI 3.x Specification File
@@ -343,6 +399,9 @@ Each configured website automatically generates corresponding dedicated tools:
 **Source**: https://api.example.com/openapi.json
 **OpenAPI Version**: 3.0.3
 **Validation Status**: ✅ Valid
+**📊 Processing Time**: 1.2 seconds
+**🔢 Endpoints**: 25 endpoints
+**🌍 Server Locations**: 3 servers
 
 ---
 
@@ -351,7 +410,7 @@ Each configured website automatically generates corresponding dedicated tools:
 - **API Name**: Example API
 - **Version**: 2.1.0
 - **OpenAPI Version**: 3.0.3
-- **Description**: A powerful example API
+- **Description**: A powerful example API for modern applications
 
 ## 🌐 Servers
 
@@ -362,7 +421,7 @@ Each configured website automatically generates corresponding dedicated tools:
 
 ## 🛠️ API Endpoints
 
-Total of **15** endpoints:
+Total of **25** endpoints:
 
 ### 👥 `/users`
 - **GET**: Get user list
@@ -375,10 +434,10 @@ Total of **15** endpoints:
 
 ## 🧩 Components
 
-- **Schemas**: 8 data models
-- **Parameters**: 5 reusable parameters  
-- **Responses**: 12 reusable responses
-- **Security Schemes**: 2 security mechanisms
+- **Schemas**: 12 data models
+- **Parameters**: 8 reusable parameters  
+- **Responses**: 15 reusable responses
+- **Security Schemes**: 3 security mechanisms
 ```
 
 ---
@@ -459,17 +518,20 @@ npm run dev 2> debug.log
 
 ## 📈 Performance & Optimization
 
-### ⚡ Performance Tips
+### ⚡ Performance Features
 
-- 🚀 **Batch Fetching**: Configure multiple websites at once
-- 💾 **Caching Mechanism**: Repeated requests are faster
-- 🎯 **Precise Selectors**: Improve content extraction accuracy
+- 🚀 **Smart Retry**: Intelligent retry with exponential backoff
+- 💾 **Rate Limiting**: Built-in rate limiting to prevent overload
+- 🎯 **Content Filtering**: Remove irrelevant content for faster processing
+- 🧹 **Ad Removal**: Automatic ad and popup removal
+- 📊 **Stealth Mode**: Anti-detection browsing capabilities
 
 ### 🛡️ Security Considerations
 
 - 🔒 HTTPS websites only (recommended)
 - 🛠️ Auto filter malicious scripts
 - 📝 Limit output content length
+- 🔐 Stealth browsing to avoid detection
 
 ---
 
@@ -486,6 +548,7 @@ npm run dev 2> debug.log
 | `turndown` | ^7.1.2 | HTML to Markdown |
 | `yaml` | ^2.8.0 | YAML Format Support |
 | `zod` | ^3.22.0 | Data Validation Framework |
+| `playwright` | ^1.40.0 | Browser automation |
 
 </div>
 
@@ -493,7 +556,25 @@ npm run dev 2> debug.log
 
 ## 📝 Changelog
 
-### 🎉 v1.1.0 (Latest)
+### 🎉 v1.2.0 (Latest)
+
+<div align="center">
+
+**🚀 Major Feature Updates**
+
+</div>
+
+- ✨ **Added** Enhanced content processing with AI-powered cleanup
+- ✨ **Added** Smart analytics: word count, reading time, content summary
+- ✨ **Added** Language detection and multi-language support
+- ✨ **Added** Stealth browser capabilities for anti-detection
+- ✨ **Added** Built-in rate limiting and retry mechanisms
+- ✨ **Added** Advanced content filtering and ad removal
+- 🔧 **Enhanced** Markdown processing with more HTML element support
+- 📊 **Improved** Output format with rich metadata
+- 🎯 **Fixed** Various technical issues and dependencies
+
+### 🎯 v1.1.0 (Previous)
 
 <div align="center">
 
